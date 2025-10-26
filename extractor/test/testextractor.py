@@ -19,7 +19,6 @@
 
 from extract import extract_from_dictfile
 import unittest
-import sys
 import hashlib
 
 class TestExtractor(unittest.TestCase):

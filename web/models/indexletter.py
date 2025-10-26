@@ -23,7 +23,6 @@ from whoosh.qparser import MultifieldParser
 from whoosh.sorting import FieldFacet, TranslateFacet
 import json
 from pyuca import Collator
-from searchbase import SearchBase
 
 
 dir_name = "../data/indexletter_index/"

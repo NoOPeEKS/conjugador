@@ -34,7 +34,6 @@ import datetime
 import json
 from functools import lru_cache
 import psutil
-import datetime
 
 app = Flask(__name__)
 start_time = datetime.datetime.now()
@@ -133,7 +132,7 @@ def stats():
     try:
         requested = request.args.get('date')
         date_requested = datetime.datetime.strptime(requested, '%Y-%m-%d')
-    except Exception as e:
+    except Exception:
         return Response({}, mimetype="application/json", status=400)
 
     usage = Usage()
