@@ -36,33 +36,33 @@ class TestDictionaryFile(unittest.TestCase):
         diccionari = self._get_dictionary()
         results = list(diccionari.get_form_lemma_postag())
 
-        self.assertEquals(12, len(results))
-        self.assertEquals("dobleguéssim", results[0][FORM])
-        self.assertEquals("doblegar", results[0][LEMMA])
-        self.assertEquals("VMSI1P02", results[0][POSTAG])
+        self.assertEqual(12, len(results))
+        self.assertEqual("dobleguéssim", results[0][FORM])
+        self.assertEqual("doblegar", results[0][LEMMA])
+        self.assertEqual("VMSI1P02", results[0][POSTAG])
 
     def test_get_lemmas_for_infinitives(self):
         diccionari = self._get_dictionary()
         lemmas = diccionari.get_lemmas_for_infinitives()
 
-        self.assertEquals(3, len(lemmas))
-        self.assertEquals("reconèixer", lemmas[0])
-        self.assertEquals("cantar", lemmas[1])
-        self.assertEquals("anar_aux", lemmas[2])
+        self.assertEqual(3, len(lemmas))
+        self.assertEqual("reconèixer", lemmas[0])
+        self.assertEqual("cantar", lemmas[1])
+        self.assertEqual("anar_aux", lemmas[2])
         
     def test_exclude_lemmas_list(self):
         diccionari = self._get_dictionary()
         lemmas = set()
         lemmas.add("cantar")
         diccionari.exclude_lemmas_list(lemmas)
-        self.assertEquals(11, len(diccionari.lines))
+        self.assertEqual(11, len(diccionari.lines))
 
     def test_form_lemma_postag_from_line_specialcases(self):
         diccionari = self._get_dictionary()
         rst = diccionari._get_form_lemma_postag_from_line("col·latària col·latari NCFS000")
-        self.assertEquals(('col·latària', 'col·latari', 'NCFS000'), rst)
+        self.assertEqual(('col·latària', 'col·latari', 'NCFS000'), rst)
         rst = diccionari._get_form_lemma_postag_from_line("mont-rogenc mont-rogenc AQ0MS0")
-        self.assertEquals(('mont-rogenc', 'mont-rogenc', 'AQ0MS0'), rst)
+        self.assertEqual(('mont-rogenc', 'mont-rogenc', 'AQ0MS0'), rst)
 
     def test_valencia(self):
         diccionari = self._get_dictionary()

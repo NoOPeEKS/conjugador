@@ -28,19 +28,19 @@ class TestReflexius(unittest.TestCase):
 
     def test_has_reflexiu_no(self):
         reflexiu = self.reflexius.get_reflexiu("cantar")
-        self.assertEquals("cantar", reflexiu)
+        self.assertEqual("cantar", reflexiu)
 
     def _test_get_reflexiu_yes(self):
         reflexiu = self.reflexius.get_reflexiu("abromar")
-        self.assertEquals("abromar-se", reflexiu)
+        self.assertEqual("abromar-se", reflexiu)
 
     def _test_get_reflexiu_auto_yes(self):
         reflexiu = self.reflexius.get_reflexiu("autocensurar")
-        self.assertEquals("autocensurar-se", reflexiu)
+        self.assertEqual("autocensurar-se", reflexiu)
 
     def _test_get_reflexiu_yes_aprof(self):
         reflexiu = self.reflexius.get_reflexiu("condoldre")
-        self.assertEquals("condoldre's", reflexiu)
+        self.assertEqual("condoldre's", reflexiu)
 
 
 if __name__ == '__main__':

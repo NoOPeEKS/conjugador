@@ -41,9 +41,9 @@ class TestDefinitions(unittest.TestCase):
 
     def test_get_without_reflexive_pronoun(self):
         definitions = Definitions()
-        self.assertEquals("apoltronar", definitions.get_without_reflexive_pronoun("apoltronar-se"))
-        self.assertEquals("entrebatre", definitions.get_without_reflexive_pronoun("entrebatre's"))
-        self.assertEquals("cantar", definitions.get_without_reflexive_pronoun("cantar"))
+        self.assertEqual("apoltronar", definitions.get_without_reflexive_pronoun("apoltronar-se"))
+        self.assertEqual("entrebatre", definitions.get_without_reflexive_pronoun("entrebatre's"))
+        self.assertEqual("cantar", definitions.get_without_reflexive_pronoun("cantar"))
 
     def test_generate(self):
 
@@ -56,8 +56,8 @@ class TestDefinitions(unittest.TestCase):
             defj_gen = self._hash_file(os.path.join(dirpath, "definitions.json"))
             defj_ref = self._hash_file("test/data/definitions.json")
 
-        self.assertEquals(def_ref, def_gen)
-        self.assertEquals(defj_ref, defj_gen)
+        self.assertEqual(def_ref, def_gen)
+        self.assertEqual(defj_ref, defj_gen)
 
 
 

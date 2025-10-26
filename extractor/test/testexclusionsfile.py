@@ -29,7 +29,7 @@ class TestExclusionsFile(unittest.TestCase):
         exclusionsFile = ExclusionsFile(filename)
         lemmas = exclusionsFile.get_lemmas()
 
-        self.assertEquals(486, len(lemmas))
+        self.assertEqual(486, len(lemmas))
 
 if __name__ == '__main__':
     unittest.main()

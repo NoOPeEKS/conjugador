@@ -28,19 +28,19 @@ class TestNotes(unittest.TestCase):
 
     def test_get_note_no(self):
         note = self.notes.get_note("cantar")
-        self.assertEquals(None, note)
+        self.assertEqual(None, note)
 
     def test_get_note_yes(self):
         note = self.notes.get_note("borrasquejar")
-        self.assertEquals("Aquest verb meteorològic habitualment només s'usa en la 3a persona, del singular o del plural, i les formes no personals.", note)
+        self.assertEqual("Aquest verb meteorològic habitualment només s'usa en la 3a persona, del singular o del plural, i les formes no personals.", note)
 
     def _test_has_note_false(self):
         note = self.note.has_note_for("cantar")
-        self.assertEquals(False, note)
+        self.assertEqual(False, note)
 
     def _test_has_note_true(self):
         note = self.note.has_note_for("coure")
-        self.assertEquals(True, note)
+        self.assertEqual(True, note)
 
 
 if __name__ == '__main__':
