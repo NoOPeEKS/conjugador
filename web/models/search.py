@@ -18,11 +18,12 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+import json
+from pathlib import Path
+
+from searchbase import SearchBase
 from whoosh.index import open_dir
 from whoosh.qparser import MultifieldParser
-import json
-from searchbase import SearchBase
-
 
 dir_name = "../data/search_index/"
 ix = open_dir(dir_name)  # static instance reusable across requests
@@ -81,7 +82,7 @@ class Search(SearchBase):
         for result in results:
             filepath = "../" + result["file_path"]
 
-            with open(filepath, "r") as j:
+            with Path(filepath).open("r") as j:
                 file = json.loads(j.read())
                 all_results.append(file)
 

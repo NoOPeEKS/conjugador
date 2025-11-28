@@ -18,22 +18,25 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-from flask import Flask, request, Response
 import sys
 
+from flask import Flask, Response, request
+
 sys.path.append("models/")
-from search import Search
-from autocomplete import Autocomplete
-from indexletter import IndexLetter
-from usage import Usage
+import datetime
+import json
 import logging
 import logging.handlers
 import os
 import time
-import datetime
-import json
 from functools import lru_cache
+from pathlib import Path
+
 import psutil
+from autocomplete import Autocomplete
+from indexletter import IndexLetter
+from search import Search
+from usage import Usage
 
 app = Flask(__name__)
 start_time = datetime.datetime.now()
@@ -43,7 +46,7 @@ def init_logging():
     LOGDIR = os.environ.get("LOGDIR", "")
     LOGLEVEL = os.environ.get("LOGLEVEL", "INFO").upper()
     logger = logging.getLogger()
-    logfile = os.path.join(LOGDIR, "web-service.log")
+    logfile = Path(LOGDIR) / "web-service.log"
     hdlr = logging.handlers.RotatingFileHandler(
         logfile, maxBytes=1024 * 1024, backupCount=1
     )

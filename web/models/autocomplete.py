@@ -18,11 +18,12 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+import json
+
+from firstletter import FirstLetter
+from searchbase import SearchBase
 from whoosh.index import open_dir
 from whoosh.qparser import MultifieldParser
-import json
-from searchbase import SearchBase
-from firstletter import FirstLetter
 
 
 def open_indexes():

@@ -18,19 +18,19 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import os
 import datetime
-from shutil import copyfile
 import logging
-
-"""
-    This class keeps a log of the usage of a service
-        - For usage write a line on the file with the date
-        - At the number of days specified cleans old entries
-"""
+from pathlib import Path
+from shutil import copyfile
 
 
 class Usage(object):
+    """
+    This class keeps a log of the usage of a service
+        - For usage write a line on the file with the date
+        - At the number of days specified cleans old entries
+    """
+
     FILE = "/srv/stats/usage.txt"
     DAYS_TO_KEEP = 7
     rotate = True
@@ -39,14 +39,14 @@ class Usage(object):
         self.FILE = filename
 
     def _get_time_now(self):
-        return datetime.datetime.utcnow()
+        return datetime.datetime.now()
 
     def get_date_from_line(self, line):
         return line.split("\t", 1)[0]
 
     def log(self, endpoint, time_used):
         try:
-            with open(self.FILE, "a+") as file_out:
+            with Path(self.FILE).open("a+") as file_out:
                 current_time = self._get_time_now().strftime(
                     "%Y-%m-%d %H:%M:%S"
                 )
@@ -72,7 +72,7 @@ class Usage(object):
     def get_stats(self, date_requested):
         results = {}
         try:
-            with open(self.FILE, "r") as file_in:
+            with Path(self.FILE).open("r") as file_in:
                 for line in file_in:
                     date_component, endpoint, time_component = (
                         self._get_line_components(line)
@@ -109,7 +109,7 @@ class Usage(object):
 
     def _read_first_line(self):
         try:
-            with open(self.FILE, "r") as f:
+            with Path(self.FILE).open("r") as f:
                 first = f.readline()
                 return first
         except IOError:
@@ -127,13 +127,15 @@ class Usage(object):
 
     def _rotate_file(self):
         TEMP = "usage.bak"
-        directory = os.path.dirname(os.path.abspath(self.FILE))
-        temp_file = os.path.join(directory, TEMP)
+        directory = Path(self.FILE).resolve().parent
+        temp_file = directory / TEMP
 
         copyfile(self.FILE, temp_file)
 
-        with open(temp_file, "r") as temp:
-            with open(self.FILE, "w") as new:
-                for line in temp:
-                    if self._is_old_line(line) is False:
-                        new.write(line)
+        with (
+            Path(temp_file).open("r") as temp,
+            Path(self.FILE).open("w") as new,
+        ):
+            for line in temp:
+                if self._is_old_line(line) is False:
+                    new.write(line)

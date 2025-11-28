@@ -18,12 +18,12 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+import json
+
+from pyuca import Collator
 from whoosh.index import open_dir
 from whoosh.qparser import MultifieldParser
 from whoosh.sorting import FieldFacet, TranslateFacet
-import json
-from pyuca import Collator
-
 
 dir_name = "../data/indexletter_index/"
 ix_letter = open_dir(dir_name)  # static instance reusable across requests
