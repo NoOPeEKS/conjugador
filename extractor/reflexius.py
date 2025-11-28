@@ -33,7 +33,7 @@ class Reflexius:
         filename = directory / FILENAME
 
         with filename.open() as f:
-            reflexius = set([s.strip() for s in f.readlines()])
+            reflexius = {s.strip() for s in f.readlines()}
 
         print(f"Read {len(reflexius)} reflexius")
         self.reflexius = reflexius
@@ -42,8 +42,5 @@ class Reflexius:
         if lemma not in self.reflexius:
             return lemma
 
-        if lemma[-1] == "e":
-            lemma = lemma + "'s"
-        else:
-            lemma = lemma + "-se"
+        lemma = lemma + "'s" if lemma[-1] == "e" else lemma + "-se"
         return lemma

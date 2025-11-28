@@ -23,7 +23,7 @@ class Form:
     def __init__(self, word, variant, prefix="", diacritic=False):
         self.word = prefix + word
         self.variant = variant
-        if diacritic == True:
+        if diacritic:
             self.diacritic = diacritic
 
     def __str__(self):

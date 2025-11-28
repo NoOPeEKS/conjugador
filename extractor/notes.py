@@ -41,13 +41,9 @@ class Notes:
         self.notes = notes
 
     def has_note_for(self, lemma):
-        if lemma not in self.notes:
-            return False
-        else:
-            return True
+        return lemma in self.notes
 
     def get_note(self, lemma):
         if lemma in self.notes:
             return self.notes[lemma]
-        else:
-            return None
+        return None

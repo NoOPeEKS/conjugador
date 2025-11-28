@@ -43,7 +43,7 @@ class DictionaryFile:
             yield form, lemma, postag
 
     def get_lemmas_for_infinitives(self):
-        INFINITIVE_DESCRIPTORS = set(["VMN00000", "VAN00000", "VSN00000"])
+        INFINITIVE_DESCRIPTORS = {"VMN00000", "VAN00000", "VSN00000"}
 
         lemmas = []
         for line in self.lines:
@@ -69,7 +69,7 @@ class DictionaryFile:
 
     def _load_specific_lemmas_with_pos(self, tag):
         lemmas = {}
-        for i in range(0, len(self.lines)):
+        for i in range(len(self.lines)):
             line = self.lines[i]
             form, lemma, postag = self._get_form_lemma_postag_from_line(line)
             if postag == tag:
@@ -94,7 +94,6 @@ class DictionaryFile:
     # Transforms a tag VMN00000 into VMN0000V
     def _valencia_update_tag_in_line(self, line_idx, tag):
         line = self.lines[line_idx]
-        idx = line.find(tag)
         val_tag = tag[0:-1] + "V"
         line = line.replace(tag, val_tag)
         self.lines[line_idx] = line
@@ -125,7 +124,7 @@ class DictionaryFile:
     """
 
     def _pre_process_anar_auxiliar(self):
-        for i in range(0, len(self.lines)):
+        for i in range(len(self.lines)):
             line = self.lines[i]
             form, lemma, postag = self._get_form_lemma_postag_from_line(line)
 

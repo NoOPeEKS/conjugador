@@ -368,16 +368,9 @@ def _set_plusquamperfet_subjuntiu(tense, lemma_subdict):
 
 
 def _build_dictionary(dictionary_file):
-    # key = lemma (infinitive)
-    #           value dict {}
-    #                   key = postag
-    #                   value = form
     main_dict = {}
     for form, lemma, postag in dictionary_file.get_form_lemma_postag():
-        if lemma in main_dict:
-            lemma_subdict = main_dict[lemma]
-        else:
-            lemma_subdict = {}
+        lemma_subdict = main_dict.get(lemma, {})
 
         diacritic = diacritics.has_word_diacritic(form)
         if diacritic:
@@ -517,7 +510,7 @@ def _load_definitions(definitions_file):
 def rename_anar_aux_infinitive(lemma, tenses):
     if lemma == "anar_aux":
         lemma = "anar - auxiliar"
-        for i in range(0, len(tenses)):
+        for i in range(len(tenses)):
             tense = tenses[i]
             if any(
                 ext in tense.tense
