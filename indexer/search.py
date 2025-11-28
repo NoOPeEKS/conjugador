@@ -17,12 +17,12 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-from whoosh.fields import TEXT, Schema
-from whoosh.index import create_in
+from firstletter import FirstLetter
 from index import Index
 from whoosh.analysis import CharsetFilter
+from whoosh.fields import TEXT, Schema
+from whoosh.index import create_in
 from whoosh.support.charset import accent_map
-from firstletter import FirstLetter
 
 
 class Search(Index):

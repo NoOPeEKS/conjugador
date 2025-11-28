@@ -17,10 +17,10 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-from whoosh.fields import TEXT, Schema, STORED
-from whoosh.index import create_in
-from index import Index
 from firstletter import FirstLetter
+from index import Index
+from whoosh.fields import STORED, TEXT, Schema
+from whoosh.index import create_in
 
 
 class Autocomplete(Index):
