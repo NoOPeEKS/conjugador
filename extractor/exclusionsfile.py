@@ -22,6 +22,8 @@
 Reads a plain text file with forms that we need to ignore
 """
 
+from pathlib import Path
+
 
 class ExclusionsFile:
     def __init__(self, exclusion_file):
@@ -31,7 +33,7 @@ class ExclusionsFile:
         return self.lemmas
 
     def _read_file(self, input_file):
-        with open(input_file) as f:
+        with Path(input_file).open() as f:
             return f.readlines()
 
     def _process_exclusions(self, exclusion_file):

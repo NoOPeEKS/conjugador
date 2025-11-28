@@ -18,7 +18,7 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import os
+from pathlib import Path
 
 
 class Diacritics:
@@ -31,12 +31,12 @@ class Diacritics:
 
         diacritics = set()
 
-        if os.path.exists(FILENAME):
+        if Path(FILENAME).exists():
             filename = FILENAME
         else:
-            filename = os.path.join("extractor/", f"{FILENAME}")
+            filename = Path("extractor") / FILENAME
 
-        with open(filename) as f:
+        with Path(filename).open() as f:
             lines = f.readlines()
 
         for line in lines:

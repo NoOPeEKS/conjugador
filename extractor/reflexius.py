@@ -19,6 +19,7 @@
 # Boston, MA 02111-1307, USA.
 
 import os
+from pathlib import Path
 
 
 class Reflexius:
@@ -28,10 +29,10 @@ class Reflexius:
     def load_reflexius(self):
         FILENAME = "reflexius.txt"
 
-        directory = os.path.dirname(os.path.realpath(__file__))
-        filename = os.path.join(directory, FILENAME)
+        directory = Path(os.path.realpath(__file__)).parent
+        filename = directory / FILENAME
 
-        with open(filename) as f:
+        with filename.open() as f:
             reflexius = set([s.strip() for s in f.readlines()])
 
         print(f"Read {len(reflexius)} reflexius")

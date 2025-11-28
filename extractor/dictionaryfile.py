@@ -18,16 +18,17 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+"""
+Reads a dictionary text file with entries with the following format:
+
+    form lemma postag
+    cantaria cantar VMIC1S00
+
+Makes the data accessible in the form of: form, lemma and postag.
+"""
+
 import re
-
-"""
-    Reads a dictionary text file with entries with the following format:
-
-        form lemma postag
-        cantaria cantar VMIC1S00
-
-    Makes the data accessible in the form of: form, lemma and postag.
-"""
+from pathlib import Path
 
 
 class DictionaryFile:
@@ -115,7 +116,7 @@ class DictionaryFile:
         print(f"Marked {total} forms tagged {tag} as Valencian")
 
     def _read_file(self, input_file):
-        with open(input_file) as f:
+        with Path(input_file).open() as f:
             return f.readlines()
 
     """

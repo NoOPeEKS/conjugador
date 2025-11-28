@@ -18,17 +18,18 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import json
 import datetime
-import os
+import json
 import shutil
 from optparse import OptionParser
-from forms import Tense, Form
+from pathlib import Path
+
 from diacritics import Diacritics
-from reflexius import Reflexius
-from notes import Notes
 from dictionaryfile import DictionaryFile
 from exclusionsfile import ExclusionsFile
+from forms import Form, Tense
+from notes import Notes
+from reflexius import Reflexius
 
 DIACRITIC_POSTAG = "D"
 WORDS_SEPARATOR = " / "
@@ -502,12 +503,13 @@ def _serialize_to_file(file_dir, lemma, tenses):
     d[lemma] = tenses
     s = json.dumps(d, default=lambda x: x.__dict__, indent=4)
 
-    with open(os.path.join(file_dir, lemma + ".json"), "w") as file:
+    path = Path(file_dir) / f"{lemma}.json"
+    with path.open(mode="w") as file:
         file.write(s)
 
 
 def _load_definitions(definitions_file):
-    with open(definitions_file) as json_file:
+    with Path(definitions_file).open() as json_file:
         data = json.load(json_file)
         return data
 
@@ -563,9 +565,9 @@ def extract_from_dictfile(
     dictionary = _get_dictionary(dictionary_file, exclusions_file)
     lemmas = dictionary.get_lemmas_for_infinitives()
 
-    if os.path.exists(output_dir):
+    if Path(output_dir).exists():
         shutil.rmtree(output_dir)
-        os.makedirs(output_dir)
+        Path(output_dir).mkdir(parents=True)
 
     output_dict = set()
     input_dict = _build_dictionary(dictionary)
@@ -575,9 +577,9 @@ def extract_from_dictfile(
     for lemma in lemmas:
         # if infinitive != 'cantar':
         #    continue
-        file_dir = os.path.join(output_dir, lemma[:2])
-        if not os.path.exists(file_dir):
-            os.makedirs(file_dir)
+        file_dir = Path(output_dir) / lemma[:2]
+        if not Path(file_dir).exists():
+            Path(file_dir).mkdir(parents=True)
 
         tenses = _get_tenses(input_dict, lemma)
 
@@ -591,14 +593,14 @@ def extract_from_dictfile(
 
 
 def extract_infinitives(dictionary_file, exclusions_file, output_file):
-    file_dir = os.path.dirname(output_file)
-    if not os.path.exists(file_dir):
-        os.makedirs(file_dir)
+    file_dir = Path(output_file).parent
+    if not file_dir.exists():
+        file_dir.mkdir(parents=True)
 
     dictionary = _get_dictionary(dictionary_file, exclusions_file)
     lemmas = dictionary.get_lemmas_for_infinitives()
 
-    with open(output_file, "w") as f_infinitives:
+    with Path(output_file).open(mode="w") as f_infinitives:
         f_infinitives.writelines(["%s\n" % item for item in lemmas])
 
     return len(lemmas)
