@@ -23,21 +23,20 @@ import json
 
 
 class Notes:
-
     def __init__(self):
         self.notes = set()
 
     def load_notes(self):
-        FILENAME = 'notes.json'
+        FILENAME = "notes.json"
 
         directory = os.path.dirname(os.path.realpath(__file__))
         filename = os.path.join(directory, FILENAME)
 
         with open(filename) as json_file:
-             notes = json.load(json_file)
-             
+            notes = json.load(json_file)
+
         print(f"Read {len(notes)} notes")
-             
+
         self.notes = notes
 
     def has_note_for(self, lemma):
@@ -45,7 +44,7 @@ class Notes:
             return False
         else:
             return True
- 
+
     def get_note(self, lemma):
         if lemma in self.notes:
             return self.notes[lemma]

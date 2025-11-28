@@ -17,13 +17,13 @@
 # License along with this program; if not, write to the
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
-                    
-'''
-    Reads a plain text file with forms that we need to ignore
-'''
+
+"""
+Reads a plain text file with forms that we need to ignore
+"""
+
 
 class ExclusionsFile:
-
     def __init__(self, exclusion_file):
         self.lemmas = self._process_exclusions(exclusion_file)
 

@@ -18,8 +18,9 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+
 class Form:
-    def __init__(self, word, variant, prefix="", diacritic = False):
+    def __init__(self, word, variant, prefix="", diacritic=False):
         self.word = prefix + word
         self.variant = variant
         if diacritic == True:
@@ -28,8 +29,8 @@ class Form:
     def __str__(self):
         return "{0} - {1} ".format(self.word, self.variant)
 
-class Tense:
 
+class Tense:
     def __init__(self, mode, tense, postag):
         self.mode = mode
         self.tense = tense
@@ -43,11 +44,11 @@ class Tense:
 
     def __str__(self):
         s = "---"
-        s += "* {0} ({1})\n".format(self.tense,  self.mode)
-        s += '{0}\n'.format(''.join(str(p) for p in self.singular1))
-        s += '{0}\n'.format(''.join(str(p) for p in self.singular2))
-        s += '{0}\n'.format(''.join(str(p) for p in self.singular3))
-        s += '{0}\n'.format(''.join(str(p) for p in self.plural1))
-        s += '{0}\n'.format(''.join(str(p) for p in self.plural2))
-        s += '{0}\n'.format(''.join(str(p) for p in self.plural3))
+        s += "* {0} ({1})\n".format(self.tense, self.mode)
+        s += "{0}\n".format("".join(str(p) for p in self.singular1))
+        s += "{0}\n".format("".join(str(p) for p in self.singular2))
+        s += "{0}\n".format("".join(str(p) for p in self.singular3))
+        s += "{0}\n".format("".join(str(p) for p in self.plural1))
+        s += "{0}\n".format("".join(str(p) for p in self.plural2))
+        s += "{0}\n".format("".join(str(p) for p in self.plural3))
         return s

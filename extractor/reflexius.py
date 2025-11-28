@@ -20,13 +20,13 @@
 
 import os
 
-class Reflexius:
 
+class Reflexius:
     def __init__(self):
         self.reflexius = set()
 
     def load_reflexius(self):
-        FILENAME = 'reflexius.txt'
+        FILENAME = "reflexius.txt"
 
         directory = os.path.dirname(os.path.realpath(__file__))
         filename = os.path.join(directory, FILENAME)
@@ -41,7 +41,7 @@ class Reflexius:
         if lemma not in self.reflexius:
             return lemma
 
-        if lemma[-1] == 'e':
+        if lemma[-1] == "e":
             lemma = lemma + "'s"
         else:
             lemma = lemma + "-se"

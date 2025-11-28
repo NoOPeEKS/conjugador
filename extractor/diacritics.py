@@ -20,14 +20,14 @@
 
 import os
 
-class Diacritics:
 
+class Diacritics:
     def __init__(self):
         self.diacritics = set()
 
     def load_diacritics(self):
-        COMMENT = '#'
-        FILENAME = 'replace_diacritics_iec.txt'
+        COMMENT = "#"
+        FILENAME = "replace_diacritics_iec.txt"
 
         diacritics = set()
 
@@ -44,15 +44,14 @@ class Diacritics:
             if line[0] == COMMENT:
                 continue
 
-            src, trg = line.split('=')
+            src, trg = line.split("=")
             diacritics.add(src)
 
         print(f"Read {len(diacritics)} diacritics")
         self.diacritics = diacritics
 
     def has_word_diacritic(self, word):
-
-        TWO_WORDS_SEPARATOR = '/'
+        TWO_WORDS_SEPARATOR = "/"
 
         if TWO_WORDS_SEPARATOR in word:
             words = word.split(TWO_WORDS_SEPARATOR)
