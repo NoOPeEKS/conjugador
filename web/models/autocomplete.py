@@ -35,7 +35,7 @@ def open_indexes():
             dir_name_letter = f"{dir_name}{letter}"
             ix = open_dir(dir_name_letter)
             idxs[letter] = ix
-        except:
+        except Exception:
             print(f"No index found for {letter}")
 
     return idxs

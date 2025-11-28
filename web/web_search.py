@@ -130,7 +130,6 @@ def autocomplete_api(word):
     logging.debug(
         f"/autocomplete for '{word}': {num_results} results, time: {elapsed_time:.2f}s"
     )
-    #    Usage().log("autocomplete", elapsed_time)
     return json_answer_status(j, status)
 
 
