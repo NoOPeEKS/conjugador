@@ -25,7 +25,8 @@ from searchbase import SearchBase
 
 
 dir_name = "../data/search_index/"
-ix = open_dir(dir_name) # static instance reusable across requests
+ix = open_dir(dir_name)  # static instance reusable across requests
+
 
 class Search(SearchBase):
     """Search a term in the Whoosh index."""
@@ -44,26 +45,31 @@ class Search(SearchBase):
         if self.searcher is None:
             self.search()
 
-        results = self.searcher.search(self.query, limit=None,
-                                    sortedby='index_letter',
-                                    collapse='file_path')
+        results = self.searcher.search(
+            self.query,
+            limit=None,
+            sortedby="index_letter",
+            collapse="file_path",
+        )
 
         if results.is_empty():
-            results = self.searcher.search(self.query_expansion, limit=None,
-                                    sortedby='index_letter',
-                                    collapse='file_path')
+            results = self.searcher.search(
+                self.query_expansion,
+                limit=None,
+                sortedby="index_letter",
+                collapse="file_path",
+            )
 
         self.num_results = len(results)
         return results
 
     def search(self):
-
         self.searcher = ix.searcher()
         fields = []
-        qs = u' verb_form:({0})'.format(self._word)
+        qs = " verb_form:({0})".format(self._word)
         self.query = MultifieldParser(fields, ix.schema).parse(qs)
 
-        qs = u' verb_form_no_diacritics:({0})'.format(self._word)
+        qs = " verb_form_no_diacritics:({0})".format(self._word)
         self.query_expansion = MultifieldParser(fields, ix.schema).parse(qs)
 
     def get_json_search(self):
@@ -73,11 +79,12 @@ class Search(SearchBase):
         results = self.get_results()
         all_results = []
         for result in results:
+            filepath = "../" + result["file_path"]
 
-            filepath = "../" + result['file_path']
-
-            with open(filepath, 'r') as j:
+            with open(filepath, "r") as j:
                 file = json.loads(j.read())
                 all_results.append(file)
 
-        return json.dumps(all_results, indent=4, separators=(',', ': ')), status
+        return json.dumps(
+            all_results, indent=4, separators=(",", ": ")
+        ), status

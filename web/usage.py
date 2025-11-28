@@ -23,13 +23,14 @@ import datetime
 from shutil import copyfile
 import logging
 
-'''
+"""
     This class keeps a log of the usage of a service
         - For usage write a line on the file with the date
         - At the number of days specified cleans old entries
-'''
-class Usage(object):
+"""
 
+
+class Usage(object):
     FILE = "/srv/stats/usage.txt"
     DAYS_TO_KEEP = 7
     rotate = True
@@ -41,13 +42,17 @@ class Usage(object):
         return datetime.datetime.utcnow()
 
     def get_date_from_line(self, line):
-         return line.split("\t", 1)[0]
+        return line.split("\t", 1)[0]
 
     def log(self, endpoint, time_used):
         try:
             with open(self.FILE, "a+") as file_out:
-                current_time = self._get_time_now().strftime('%Y-%m-%d %H:%M:%S')
-                file_out.write('{0}\t{1}\t{2}\n'.format(current_time, endpoint, time_used))
+                current_time = self._get_time_now().strftime(
+                    "%Y-%m-%d %H:%M:%S"
+                )
+                file_out.write(
+                    "{0}\t{1}\t{2}\n".format(current_time, endpoint, time_used)
+                )
 
             if self.rotate and self._is_old_line(self._read_first_line()):
                 self._rotate_file()
@@ -69,24 +74,32 @@ class Usage(object):
         try:
             with open(self.FILE, "r") as file_in:
                 for line in file_in:
-                    date_component, endpoint, time_component = self._get_line_components(line)
+                    date_component, endpoint, time_component = (
+                        self._get_line_components(line)
+                    )
 
                     if endpoint in results:
                         stats = results[endpoint]
                     else:
                         stats = {}
                         results[endpoint] = self._init_stats_dict(stats)
-                    
+
                     datetime_no_newline = date_component
-                    line_datetime = datetime.datetime.strptime(datetime_no_newline, '%Y-%m-%d %H:%M:%S')
+                    line_datetime = datetime.datetime.strptime(
+                        datetime_no_newline, "%Y-%m-%d %H:%M:%S"
+                    )
                     if line_datetime.date() == date_requested.date():
                         stats["calls"] = stats["calls"] + 1
-                        stats["time_used"] = stats["time_used"] + float(time_component)
+                        stats["time_used"] = stats["time_used"] + float(
+                            time_component
+                        )
 
             for endpoint in results:
                 result = results[endpoint]
                 calls = result["calls"]
-                result["time_used"] = result["time_used"] / calls if calls else 0
+                result["time_used"] = (
+                    result["time_used"] / calls if calls else 0
+                )
 
         except Exception as exception:
             logging.error("get_stats. Error:" + str(exception))
@@ -107,8 +120,10 @@ class Usage(object):
             return False
 
         line = self.get_date_from_line(line)
-        line_datetime = datetime.datetime.strptime(line, '%Y-%m-%d %H:%M:%S')
-        return line_datetime < self._get_time_now() - datetime.timedelta(days = self.DAYS_TO_KEEP)
+        line_datetime = datetime.datetime.strptime(line, "%Y-%m-%d %H:%M:%S")
+        return line_datetime < self._get_time_now() - datetime.timedelta(
+            days=self.DAYS_TO_KEEP
+        )
 
     def _rotate_file(self):
         TEMP = "usage.bak"
