@@ -59,11 +59,6 @@ class IndexCreator(object):
         self.indexletter.write_entry(
             verb_form, is_infinitive, infinitive, title
         )
-
-        #        print(verb_form)
-        #        print(mode)
-        #        print(tense)
-        #        print("---")
         indexed.add(verb_form)
 
     def _get_title(self, forms):

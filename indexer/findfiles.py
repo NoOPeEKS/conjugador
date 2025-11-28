@@ -26,7 +26,7 @@ class FindFiles(object):
     def find(self, directory, pattern):
         filelist = []
 
-        for root, dirs, files in os.walk(directory):
+        for root, _, files in os.walk(directory):
             for basename in files:
                 if fnmatch.fnmatch(basename, pattern):
                     filename = Path(root) / basename
@@ -50,7 +50,7 @@ class FindFiles(object):
     def find_dirs(self, directory, pattern):
         dirlist = []
 
-        for root, dirs, files in os.walk(directory):
+        for root, dirs, _ in os.walk(directory):
             for basename in dirs:
                 if fnmatch.fnmatch(basename, pattern):
                     filename = Path(root) / basename

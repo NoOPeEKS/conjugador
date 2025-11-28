@@ -40,29 +40,28 @@ class Index(object):
         Path(directory).mkdir(parents=True)
 
     def _verbs_to_ignore_in_autocomplete(self, mode, tense):
-        if mode == "Indicatiu":
-            if any(
-                t in tense
-                for t in [
-                    "Perfet",
-                    "Plusquamperfet",
-                    "Passat perifràstic",
-                    "Passat anterior",
-                    "Passat anterior perifràstic",
-                    "Futur perfet",
-                    "Condicional perfet",
-                ]
-            ):
-                return True
+        if mode == "Indicatiu" and any(
+            t in tense
+            for t in [
+                "Perfet",
+                "Plusquamperfet",
+                "Passat perifràstic",
+                "Passat anterior",
+                "Passat anterior perifràstic",
+                "Futur perfet",
+                "Condicional perfet",
+            ]
+        ):
+            return True
 
-        if mode == "Subjuntiu":
-            if any(t in tense for t in ["Perfet", "Plusquamperfet"]):
-                return True
+        if mode == "Subjuntiu" and any(
+            t in tense for t in ["Perfet", "Plusquamperfet"]
+        ):
+            return True
 
-        if mode == "Formes no personals":
-            if any(
+        return bool(
+            mode == "Formes no personals"
+            and any(
                 t in tense for t in ["Infinitiu compost", "Gerundi compost"]
-            ):
-                return True
-
-        return False
+            )
+        )
