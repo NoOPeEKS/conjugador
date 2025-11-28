@@ -11,3 +11,8 @@ dependencies = [
     "pyuca==1.2",
     "whoosh==2.7.4",
 ]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.14.6",
+]
