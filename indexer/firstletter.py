@@ -17,24 +17,26 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-class FirstLetter(object):
 
+class FirstLetter(object):
     def __init__(self):
         self.valid_letters = list(map(chr, range(97, 123)))
 
     def from_word(self, word):
-        s = ''
+        s = ""
         if word is None or len(word) == 0:
             return s
 
         s = word[0].lower()
-        mapping = { u'à' : u'a',
-                    u'è' : u'e',
-                    u'é' : u'e',
-                    u'í' : u'i',
-                    u'ó' : u'o',
-                    u'ò' : u'o',
-                    u'ú' : u'u'}
+        mapping = {
+            "à": "a",
+            "è": "e",
+            "é": "e",
+            "í": "i",
+            "ó": "o",
+            "ò": "o",
+            "ú": "u",
+        }
 
         if s in mapping:
             s = mapping[s]

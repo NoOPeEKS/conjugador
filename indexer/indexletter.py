@@ -22,8 +22,8 @@ from whoosh.index import create_in
 from index import Index
 from firstletter import FirstLetter
 
-class IndexLetter(Index):
 
+class IndexLetter(Index):
     def __init__(self):
         super(IndexLetter, self).__init__()
         self.dir_name = "data/indexletter_index/"
@@ -32,9 +32,11 @@ class IndexLetter(Index):
         self.letter = FirstLetter()
 
     def create(self):
-        schema = Schema(verb_form=TEXT(stored=True, sortable=True, analyzer=self.analyzer),
-                        index_letter=TEXT(sortable=True, analyzer=self.analyzer),
-                        infinitive=TEXT(stored=True, analyzer=self.analyzer))
+        schema = Schema(
+            verb_form=TEXT(stored=True, sortable=True, analyzer=self.analyzer),
+            index_letter=TEXT(sortable=True, analyzer=self.analyzer),
+            infinitive=TEXT(stored=True, analyzer=self.analyzer),
+        )
 
         self._create_dir(self.dir_name)
         ix = create_in(self.dir_name, schema)
@@ -51,10 +53,11 @@ class IndexLetter(Index):
             if verb_form == infinitive and infinitive != title:
                 verb_form = title
 
-            self.writer.add_document(verb_form = verb_form,
-                                     index_letter = index_letter,
-                                     infinitive = infinitive)
-
+            self.writer.add_document(
+                verb_form=verb_form,
+                index_letter=index_letter,
+                infinitive=infinitive,
+            )
 
     def save(self):
         self.writer.commit()

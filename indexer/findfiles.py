@@ -22,7 +22,6 @@ import os
 
 
 class FindFiles(object):
-
     def find(self, directory, pattern):
         filelist = []
 

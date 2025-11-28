@@ -22,11 +22,15 @@ from whoosh.analysis import StandardAnalyzer
 import os
 import shutil
 
-class Index(object):
 
+class Index(object):
     def __init__(self):
-        self.tokenizer_pattern = rcompile(r"(\w|·)+(\.?(\w|·)+)*") # Includes l·l
-        self.analyzer = StandardAnalyzer(minsize=1, stoplist=None, expression=self.tokenizer_pattern)
+        self.tokenizer_pattern = rcompile(
+            r"(\w|·)+(\.?(\w|·)+)*"
+        )  # Includes l·l
+        self.analyzer = StandardAnalyzer(
+            minsize=1, stoplist=None, expression=self.tokenizer_pattern
+        )
 
     def _create_dir(self, directory):
         if os.path.exists(directory):
@@ -35,18 +39,29 @@ class Index(object):
         os.makedirs(directory)
 
     def _verbs_to_ignore_in_autocomplete(self, mode, tense):
-        if mode == 'Indicatiu':
-            if any(t in tense for t in ["Perfet", "Plusquamperfet", "Passat perifràstic",\
-                                        "Passat anterior", "Passat anterior perifràstic",\
-                                        "Futur perfet", "Condicional perfet"]):
+        if mode == "Indicatiu":
+            if any(
+                t in tense
+                for t in [
+                    "Perfet",
+                    "Plusquamperfet",
+                    "Passat perifràstic",
+                    "Passat anterior",
+                    "Passat anterior perifràstic",
+                    "Futur perfet",
+                    "Condicional perfet",
+                ]
+            ):
                 return True
 
-        if mode == 'Subjuntiu':
+        if mode == "Subjuntiu":
             if any(t in tense for t in ["Perfet", "Plusquamperfet"]):
                 return True
 
-        if mode == 'Formes no personals':
-            if any(t in tense for t in ["Infinitiu compost", "Gerundi compost"]):
+        if mode == "Formes no personals":
+            if any(
+                t in tense for t in ["Infinitiu compost", "Gerundi compost"]
+            ):
                 return True
 
         return False

@@ -22,8 +22,8 @@ from whoosh.index import create_in
 from index import Index
 from firstletter import FirstLetter
 
-class Autocomplete(Index):
 
+class Autocomplete(Index):
     def __init__(self):
         super(Autocomplete, self).__init__()
         self.dir_name = "data/autocomplete_index/"
@@ -36,12 +36,14 @@ class Autocomplete(Index):
         return
 
     def _create(self, letter):
-        schema = Schema(verb_form=TEXT(stored=True, analyzer=self.analyzer),
-                        infinitive=STORED,
-                        url=STORED,
-                        autocomplete_sorting=TEXT(sortable=True))
+        schema = Schema(
+            verb_form=TEXT(stored=True, analyzer=self.analyzer),
+            infinitive=STORED,
+            url=STORED,
+            autocomplete_sorting=TEXT(sortable=True),
+        )
 
-        dir_name = f'{self.dir_name}{letter}/'
+        dir_name = f"{self.dir_name}{letter}/"
         self._create_dir(dir_name)
         ix = create_in(dir_name, schema)
         self.ixs.add(ix)
@@ -54,41 +56,56 @@ class Autocomplete(Index):
 
         return count
 
-
-    def write_entry(self, verb_form, file_path, is_infinitive, infinitive, mode, tense, title):
-
+    def write_entry(
+        self,
+        verb_form,
+        file_path,
+        is_infinitive,
+        infinitive,
+        mode,
+        tense,
+        title,
+    ):
         if self._verbs_to_ignore_in_autocomplete(mode, tense):
             return
 
         letter = self.letter.from_word(verb_form)
         if letter not in self.letter.get_letters():
-              raise IndexError(f'Letter {letter} is not supported by the client. Review get_letters()')
+            raise IndexError(
+                f"Letter {letter} is not supported by the client. Review get_letters()"
+            )
 
         if letter in self.writers:
             writer = self.writers[letter]
         else:
             writer = self._create(letter)
             self.writers[letter] = writer
-    
-        autocomplete_sorting = self._get_autocomple_sorting_key(verb_form, is_infinitive, infinitive)
+
+        autocomplete_sorting = self._get_autocomple_sorting_key(
+            verb_form, is_infinitive, infinitive
+        )
 
         if autocomplete_sorting in self.duplicates:
             return
 
         self.duplicates.add(autocomplete_sorting)
 
-        writer.add_document(verb_form = verb_form,
-                                 infinitive = title,
-                                 url = infinitive,
-                                 autocomplete_sorting = autocomplete_sorting)
+        writer.add_document(
+            verb_form=verb_form,
+            infinitive=title,
+            url=infinitive,
+            autocomplete_sorting=autocomplete_sorting,
+        )
 
-    def _get_autocomple_sorting_key(self, verb_form, is_infinitive, infinitive):
-        SORTING_PREFIX='_'
+    def _get_autocomple_sorting_key(
+        self, verb_form, is_infinitive, infinitive
+    ):
+        SORTING_PREFIX = "_"
         if is_infinitive:
             # By starting with '_', it forces infinitives to appear first in search
-            return f'{SORTING_PREFIX}{infinitive}'
+            return f"{SORTING_PREFIX}{infinitive}"
         else:
-            return f'{verb_form}{SORTING_PREFIX}{infinitive}'
+            return f"{verb_form}{SORTING_PREFIX}{infinitive}"
 
     def save(self):
         for writer in self.writers.values():
