@@ -19,8 +19,6 @@
 # Boston, MA 02111-1307, USA.
 
 import datetime
-import locale
-import time
 from indexcreator import IndexCreator
 
 

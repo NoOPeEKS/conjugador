@@ -19,6 +19,7 @@
 
 import fnmatch
 import os
+from pathlib import Path
 
 
 class FindFiles(object):
@@ -28,8 +29,8 @@ class FindFiles(object):
         for root, dirs, files in os.walk(directory):
             for basename in files:
                 if fnmatch.fnmatch(basename, pattern):
-                    filename = os.path.join(root, basename)
-                    filelist.append(filename)
+                    filename = Path(root) / basename
+                    filelist.append(str(filename))
 
         filelist.sort()
         return filelist
@@ -52,8 +53,8 @@ class FindFiles(object):
         for root, dirs, files in os.walk(directory):
             for basename in dirs:
                 if fnmatch.fnmatch(basename, pattern):
-                    filename = os.path.join(root, basename)
-                    dirlist.append(filename)
+                    filename = Path(root) / basename
+                    dirlist.append(str(filename))
 
         dirlist.sort()
         return dirlist

@@ -17,10 +17,11 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-from whoosh.util.text import rcompile
-from whoosh.analysis import StandardAnalyzer
-import os
 import shutil
+from pathlib import Path
+
+from whoosh.analysis import StandardAnalyzer
+from whoosh.util.text import rcompile
 
 
 class Index(object):
@@ -33,10 +34,10 @@ class Index(object):
         )
 
     def _create_dir(self, directory):
-        if os.path.exists(directory):
+        if Path(directory).exists():
             shutil.rmtree(directory)
 
-        os.makedirs(directory)
+        Path(directory).mkdir(parents=True)
 
     def _verbs_to_ignore_in_autocomplete(self, mode, tense):
         if mode == "Indicatiu":

@@ -18,10 +18,12 @@
 # Boston, MA 02111-1307, USA.
 
 import json
-from findfiles import FindFiles
-from search import Search
+from pathlib import Path
+
 from autocomplete import Autocomplete
+from findfiles import FindFiles
 from indexletter import IndexLetter
+from search import Search
 
 
 class IndexCreator(object):
@@ -73,7 +75,7 @@ class IndexCreator(object):
         raise Exception("No title found for the entry")
 
     def _process_file(self, filename):
-        with open(filename) as json_file:
+        with Path(filename).open() as json_file:
             data = json.load(json_file)
             infinitive = list(data.keys())[0]
 
