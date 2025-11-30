@@ -18,13 +18,15 @@
 # Boston, MA 02111-1307, USA.
 
 import json
-from findfiles import FindFiles
-from search import Search
+from pathlib import Path
+
 from autocomplete import Autocomplete
+from findfiles import FindFiles
 from indexletter import IndexLetter
+from search import Search
+
 
 class IndexCreator(object):
-
     def __init__(self, json_dir):
         self.json_dir = json_dir
         self.index_letters = 0
@@ -37,34 +39,42 @@ class IndexCreator(object):
         self.autocomplete.create()
         self.indexletter.create()
 
-
-    def _write_entry(self, indexed, verb_form, file_path, is_infinitive, infinitive, mode, tense, title):
-
-        self.search.write_entry(verb_form, file_path, is_infinitive, infinitive, mode, tense, title)
-        self.autocomplete.write_entry(verb_form, file_path, is_infinitive, infinitive, mode, tense, title)
-        self.indexletter.write_entry(verb_form, is_infinitive, infinitive, title)
-
-#        print(verb_form)
-#        print(mode)
-#        print(tense)
-#        print("---")
+    def _write_entry(
+        self,
+        indexed,
+        verb_form,
+        file_path,
+        is_infinitive,
+        infinitive,
+        mode,
+        tense,
+        title,
+    ):
+        self.search.write_entry(
+            verb_form, file_path, is_infinitive, infinitive, mode, tense, title
+        )
+        self.autocomplete.write_entry(
+            verb_form, file_path, is_infinitive, infinitive, mode, tense, title
+        )
+        self.indexletter.write_entry(
+            verb_form, is_infinitive, infinitive, title
+        )
         indexed.add(verb_form)
 
     def _get_title(self, forms):
         for form in forms:
-            title = form['title']
+            title = form["title"]
             if title:
                 return title
 
         raise Exception("No title found for the entry")
 
-
     def _process_file(self, filename):
-        with open(filename) as json_file:
+        with Path(filename).open() as json_file:
             data = json.load(json_file)
             infinitive = list(data.keys())[0]
-            
-            #if infinitive != 'cantar':
+
+            # if infinitive != 'cantar':
             #    return 0
 
             indexed = set()
@@ -72,29 +82,54 @@ class IndexCreator(object):
 
             infinitive_found = False
             for form in data[infinitive]:
-                if 'definition_credits' in form:
+                if "definition_credits" in form:
                     continue
 
-                sps = ['singular1', 'singular2', 'singular3', 'plural1', 'plural2', 'plural3']
+                sps = [
+                    "singular1",
+                    "singular2",
+                    "singular3",
+                    "plural1",
+                    "plural2",
+                    "plural3",
+                ]
                 for sp in sps:
                     for conjugacio in form[sp]:
-                        word = conjugacio['word']
+                        word = conjugacio["word"]
 
                         if word in indexed:
                             continue
 
-                        words = [x.strip() for x in word.split('/')]
+                        words = [x.strip() for x in word.split("/")]
                         for word in words:
-                            is_infinitive = form['tense'] == "Infinitiu"
+                            is_infinitive = form["tense"] == "Infinitiu"
                             if is_infinitive:
                                 infinitive_found = True
 
-                            self._write_entry(indexed, word, filename, is_infinitive, infinitive, form['mode'], form['tense'], title)
+                            self._write_entry(
+                                indexed,
+                                word,
+                                filename,
+                                is_infinitive,
+                                infinitive,
+                                form["mode"],
+                                form["tense"],
+                                title,
+                            )
 
             # This is the case of anar (auxiliar)
             if infinitive_found is False:
-                self._write_entry(indexed, infinitive, filename, True, infinitive, 'Formes no personals', 'Infinitiu', title)
-                   
+                self._write_entry(
+                    indexed,
+                    infinitive,
+                    filename,
+                    True,
+                    infinitive,
+                    "Formes no personals",
+                    "Infinitiu",
+                    title,
+                )
+
         return len(indexed)
 
     def _save_index(self):
@@ -104,11 +139,17 @@ class IndexCreator(object):
 
     def process_files(self):
         findFiles = FindFiles()
-        files = findFiles.find_recursive(self.json_dir, '*.json')
+        files = findFiles.find_recursive(self.json_dir, "*.json")
         indexed = 0
         for filename in files:
             indexed += self._process_file(filename)
 
         self._save_index()
-        print("Processed {0} files, indexed {1} variants, indexed letters {2}, indexed autocomplete entries {3}".
-              format(len(files), indexed, self.indexletter.entries, self.autocomplete.doc_count()))
+        print(
+            "Processed {0} files, indexed {1} variants, indexed letters {2}, indexed autocomplete entries {3}".format(
+                len(files),
+                indexed,
+                self.indexletter.entries,
+                self.autocomplete.doc_count(),
+            )
+        )

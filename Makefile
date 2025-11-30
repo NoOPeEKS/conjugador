@@ -8,10 +8,10 @@ docker-run:
 
 generate-data:
 	bzip2 -cdk definitions/cawiktionary-latest-pages-meta-current.xml.bz2 > definitions/cawiktionary-latest-pages-meta-current.xml
-	python extractor/extract.py -i
-	python definitions/extract-to-json.py
-	python extractor/extract.py
-	python indexer/index_creation.py
+	uv run extractor/extract.py -i
+	uv run definitions/extract-to-json.py
+	uv run extractor/extract.py
+	uv run indexer/index_creation.py
 
 update-data:
 	# Extract current version
@@ -26,8 +26,8 @@ update-data:
 	cd definitions && wget --backups=1 https://dumps.wikimedia.org/cawiktionary/latest/cawiktionary-latest-pages-meta-current.xml.bz2
 
 	# Extract new version
-	python extractor/extract.py -i
-	python definitions/extract-to-json.py
+	uv run extractor/extract.py -i
+	uv run definitions/extract-to-json.py
 
 	# Generate diffs
 	diff -u data/infinitives.old data/infinitives.txt > data/infinitives.diff || true
@@ -38,5 +38,5 @@ update-data:
 	grep -e '^\+' -e '^\-' data/definitions.diff | grep -vE '^\+\+\+|^\-\-\-' | wc -l | xargs echo "Total definitions changes:"
 
 test:
-	cd extractor && python -m nose2
-	cd definitions && python -m nose2
+	cd extractor && uv run -m nose2
+	cd definitions && uv run -m nose2

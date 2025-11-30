@@ -21,8 +21,8 @@
 import cgi
 from abc import ABC
 
-class SearchBase(ABC):
 
+class SearchBase(ABC):
     def __init__(self, word):
         self._word = word
 

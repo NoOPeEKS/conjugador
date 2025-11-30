@@ -17,36 +17,51 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-from whoosh.util.text import rcompile
-from whoosh.analysis import StandardAnalyzer
-import os
 import shutil
+from pathlib import Path
+
+from whoosh.analysis import StandardAnalyzer
+from whoosh.util.text import rcompile
+
 
 class Index(object):
-
     def __init__(self):
-        self.tokenizer_pattern = rcompile(r"(\w|·)+(\.?(\w|·)+)*") # Includes l·l
-        self.analyzer = StandardAnalyzer(minsize=1, stoplist=None, expression=self.tokenizer_pattern)
+        self.tokenizer_pattern = rcompile(
+            r"(\w|·)+(\.?(\w|·)+)*"
+        )  # Includes l·l
+        self.analyzer = StandardAnalyzer(
+            minsize=1, stoplist=None, expression=self.tokenizer_pattern
+        )
 
     def _create_dir(self, directory):
-        if os.path.exists(directory):
+        if Path(directory).exists():
             shutil.rmtree(directory)
 
-        os.makedirs(directory)
+        Path(directory).mkdir(parents=True)
 
     def _verbs_to_ignore_in_autocomplete(self, mode, tense):
-        if mode == 'Indicatiu':
-            if any(t in tense for t in ["Perfet", "Plusquamperfet", "Passat perifràstic",\
-                                        "Passat anterior", "Passat anterior perifràstic",\
-                                        "Futur perfet", "Condicional perfet"]):
-                return True
+        if mode == "Indicatiu" and any(
+            t in tense
+            for t in [
+                "Perfet",
+                "Plusquamperfet",
+                "Passat perifràstic",
+                "Passat anterior",
+                "Passat anterior perifràstic",
+                "Futur perfet",
+                "Condicional perfet",
+            ]
+        ):
+            return True
 
-        if mode == 'Subjuntiu':
-            if any(t in tense for t in ["Perfet", "Plusquamperfet"]):
-                return True
+        if mode == "Subjuntiu" and any(
+            t in tense for t in ["Perfet", "Plusquamperfet"]
+        ):
+            return True
 
-        if mode == 'Formes no personals':
-            if any(t in tense for t in ["Infinitiu compost", "Gerundi compost"]):
-                return True
-
-        return False
+        return bool(
+            mode == "Formes no personals"
+            and any(
+                t in tense for t in ["Infinitiu compost", "Gerundi compost"]
+            )
+        )

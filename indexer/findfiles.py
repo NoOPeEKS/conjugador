@@ -19,18 +19,18 @@
 
 import fnmatch
 import os
+from pathlib import Path
 
 
 class FindFiles(object):
-
     def find(self, directory, pattern):
         filelist = []
 
-        for root, dirs, files in os.walk(directory):
+        for root, _, files in os.walk(directory):
             for basename in files:
                 if fnmatch.fnmatch(basename, pattern):
-                    filename = os.path.join(root, basename)
-                    filelist.append(filename)
+                    filename = Path(root) / basename
+                    filelist.append(str(filename))
 
         filelist.sort()
         return filelist
@@ -50,11 +50,11 @@ class FindFiles(object):
     def find_dirs(self, directory, pattern):
         dirlist = []
 
-        for root, dirs, files in os.walk(directory):
+        for root, dirs, _ in os.walk(directory):
             for basename in dirs:
                 if fnmatch.fnmatch(basename, pattern):
-                    filename = os.path.join(root, basename)
-                    dirlist.append(filename)
+                    filename = Path(root) / basename
+                    dirlist.append(str(filename))
 
         dirlist.sort()
         return dirlist

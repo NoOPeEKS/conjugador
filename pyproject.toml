@@ -1,0 +1,19 @@
+[project]
+name = "conjugador"
+version = "0.1.0"
+description = "Conjugador is a web application that allows to search and display verbs forms building the content from the spelling dictionary"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "flask==3.0.2",
+    "gunicorn==22.0.0",
+    "psutil>=7.1.3",
+    "pyuca==1.2",
+    "whoosh==2.7.4",
+]
+
+[dependency-groups]
+dev = [
+    "nose2>=0.15.1",
+    "ruff>=0.14.6",
+]

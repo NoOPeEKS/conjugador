@@ -18,25 +18,25 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import os
+from pathlib import Path
+
 
 class Diacritics:
-
     def __init__(self):
         self.diacritics = set()
 
     def load_diacritics(self):
-        COMMENT = '#'
-        FILENAME = 'replace_diacritics_iec.txt'
+        COMMENT = "#"
+        FILENAME = "replace_diacritics_iec.txt"
 
         diacritics = set()
 
-        if os.path.exists(FILENAME):
+        if Path(FILENAME).exists():
             filename = FILENAME
         else:
-            filename = os.path.join("extractor/", f"{FILENAME}")
+            filename = Path("extractor") / FILENAME
 
-        with open(filename) as f:
+        with Path(filename).open() as f:
             lines = f.readlines()
 
         for line in lines:
@@ -44,15 +44,14 @@ class Diacritics:
             if line[0] == COMMENT:
                 continue
 
-            src, trg = line.split('=')
+            src, trg = line.split("=")
             diacritics.add(src)
 
         print(f"Read {len(diacritics)} diacritics")
         self.diacritics = diacritics
 
     def has_word_diacritic(self, word):
-
-        TWO_WORDS_SEPARATOR = '/'
+        TWO_WORDS_SEPARATOR = "/"
 
         if TWO_WORDS_SEPARATOR in word:
             words = word.split(TWO_WORDS_SEPARATOR)

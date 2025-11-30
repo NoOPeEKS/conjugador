@@ -18,11 +18,13 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+import json
+
+from firstletter import FirstLetter
+from searchbase import SearchBase
 from whoosh.index import open_dir
 from whoosh.qparser import MultifieldParser
-import json
-from searchbase import SearchBase
-from firstletter import FirstLetter
+
 
 def open_indexes():
     dir_name = "../data/autocomplete_index/"
@@ -30,11 +32,11 @@ def open_indexes():
     idxs = {}
     for letter in FirstLetter().get_letters():
         try:
-            dir_name_letter = f'{dir_name}{letter}'
+            dir_name_letter = f"{dir_name}{letter}"
             ix = open_dir(dir_name_letter)
             idxs[letter] = ix
-        except:
-            print(f'No index found for {letter}')
+        except Exception:
+            print(f"No index found for {letter}")
 
     return idxs
 
@@ -43,7 +45,6 @@ idxs = open_indexes()
 
 
 class Autocomplete(SearchBase):
-
     def __init__(self, word):
         self._word = word
         self.searcher = None
@@ -61,9 +62,9 @@ class Autocomplete(SearchBase):
             results = []
         else:
             self._search(letter)
-            results = self.searcher.search(self.query,
-                                           limit=10,
-                                           sortedby='autocomplete_sorting')
+            results = self.searcher.search(
+                self.query, limit=10, sortedby="autocomplete_sorting"
+            )
 
         self.num_results = len(results)
         return results
@@ -73,7 +74,7 @@ class Autocomplete(SearchBase):
 
         self.searcher = ix.searcher()
         fields = []
-        qs = u' verb_form:({0}*)'.format(self._word)
+        qs = " verb_form:({0}*)".format(self._word)
 
         self.query = MultifieldParser(fields, ix.schema).parse(qs)
 
@@ -84,9 +85,11 @@ class Autocomplete(SearchBase):
         all_results = []
         for result in results:
             verb = {}
-            verb['verb_form'] = result['verb_form']
-            verb['infinitive'] = result['infinitive']
-            verb['url'] = result['url']
+            verb["verb_form"] = result["verb_form"]
+            verb["infinitive"] = result["infinitive"]
+            verb["url"] = result["url"]
             all_results.append(verb)
 
-        return json.dumps(all_results, indent=4, separators=(',', ': ')), status
+        return json.dumps(
+            all_results, indent=4, separators=(",", ": ")
+        ), status

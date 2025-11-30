@@ -19,8 +19,7 @@
 # Boston, MA 02111-1307, USA.
 
 import datetime
-import locale
-import time
+
 from indexcreator import IndexCreator
 
 
@@ -32,7 +31,11 @@ def main():
     indexCreator = IndexCreator("data/jsons/")
     indexCreator.create()
     indexCreator.process_files()
-    print("Time used to create the index: {0} ".format(datetime.datetime.now() - start_time))
+    print(
+        "Time used to create the index: {0} ".format(
+            datetime.datetime.now() - start_time
+        )
+    )
 
 
 if __name__ == "__main__":

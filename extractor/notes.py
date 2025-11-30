@@ -18,36 +18,32 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import os
 import json
+import os
+from pathlib import Path
 
 
 class Notes:
-
     def __init__(self):
         self.notes = set()
 
     def load_notes(self):
-        FILENAME = 'notes.json'
+        FILENAME = "notes.json"
 
-        directory = os.path.dirname(os.path.realpath(__file__))
-        filename = os.path.join(directory, FILENAME)
+        directory = Path(os.path.realpath(__file__)).parent
+        filename = directory / FILENAME
 
-        with open(filename) as json_file:
-             notes = json.load(json_file)
-             
+        with filename.open() as json_file:
+            notes = json.load(json_file)
+
         print(f"Read {len(notes)} notes")
-             
+
         self.notes = notes
 
     def has_note_for(self, lemma):
-        if lemma not in self.notes:
-            return False
-        else:
-            return True
- 
+        return lemma in self.notes
+
     def get_note(self, lemma):
         if lemma in self.notes:
             return self.notes[lemma]
-        else:
-            return None
+        return None

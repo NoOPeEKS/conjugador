@@ -18,18 +18,18 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+import json
+
+from pyuca import Collator
 from whoosh.index import open_dir
 from whoosh.qparser import MultifieldParser
 from whoosh.sorting import FieldFacet, TranslateFacet
-import json
-from pyuca import Collator
-
 
 dir_name = "../data/indexletter_index/"
-ix_letter = open_dir(dir_name) # static instance reusable across requests
+ix_letter = open_dir(dir_name)  # static instance reusable across requests
 
-class IndexLetter():
 
+class IndexLetter:
     def __init__(self, letter):
         self.letter = letter
         self.searcher = None
@@ -51,11 +51,13 @@ class IndexLetter():
         facet = FieldFacet("verb_form")
         facet = TranslateFacet(self.sort_key, facet)
 
-        results = self.searcher.search(self.query,
-                                      limit=None,
-                                      sortedby=facet,
-                                      collapse_limit=1,
-                                      collapse='verb_form')
+        results = self.searcher.search(
+            self.query,
+            limit=None,
+            sortedby=facet,
+            collapse_limit=1,
+            collapse="verb_form",
+        )
 
         self.num_results = len(results)
         return results
@@ -63,7 +65,7 @@ class IndexLetter():
     def search(self):
         self.searcher = ix_letter.searcher()
         fields = []
-        qs = u'index_letter:({0})'.format(self.letter)
+        qs = "index_letter:({0})".format(self.letter)
         fields.append("index_letter")
         self.query = MultifieldParser(fields, ix_letter.schema).parse(qs)
 
@@ -74,9 +76,11 @@ class IndexLetter():
         all_results = []
         for result in results:
             verb = {}
-            verb['verb_form'] = result['verb_form']
-            if result['verb_form'] != result['infinitive']:
-                verb['infinitive'] = result['infinitive']
+            verb["verb_form"] = result["verb_form"]
+            if result["verb_form"] != result["infinitive"]:
+                verb["infinitive"] = result["infinitive"]
             all_results.append(verb)
 
-        return json.dumps(all_results, indent=4, separators=(',', ': ')), status
+        return json.dumps(
+            all_results, indent=4, separators=(",", ": ")
+        ), status
