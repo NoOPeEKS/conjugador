@@ -17,8 +17,8 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-from firstletter import FirstLetter
-from index import Index
+from indexer.firstletter import FirstLetter
+from indexer.index import Index
 from whoosh.analysis import CharsetFilter
 from whoosh.fields import TEXT, Schema
 from whoosh.index import create_in

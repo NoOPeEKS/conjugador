@@ -20,10 +20,10 @@
 import json
 from pathlib import Path
 
-from autocomplete import Autocomplete
-from findfiles import FindFiles
-from indexletter import IndexLetter
-from search import Search
+from indexer.autocomplete import Autocomplete
+from indexer.findfiles import FindFiles
+from indexer.indexletter import IndexLetter
+from indexer.search import Search
 
 
 class IndexCreator(object):

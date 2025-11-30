@@ -35,7 +35,7 @@ class Diacritics:
 
     def load_diacritics(self) -> None:
         """
-        Loads from a file all the accepted diacrítics from IEC.
+        Loads from a file all the no longer accepted diacrítics from IEC.
         """
         COMMENT = "#"
         FILENAME = "replace_diacritics_iec.txt"

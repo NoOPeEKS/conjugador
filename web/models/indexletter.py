@@ -25,7 +25,7 @@ from whoosh.index import open_dir
 from whoosh.qparser import MultifieldParser
 from whoosh.sorting import FieldFacet, TranslateFacet
 
-dir_name = "../data/indexletter_index/"
+dir_name = "data/indexletter_index/"
 ix_letter = open_dir(dir_name)  # static instance reusable across requests
 
 

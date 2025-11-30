@@ -24,12 +24,12 @@ import shutil
 from optparse import OptionParser
 from pathlib import Path
 
-from diacritics import Diacritics
-from dictionaryfile import DictionaryFile
-from exclusionsfile import ExclusionsFile
-from forms import Form, Tense
-from notes import Notes
-from reflexius import Reflexius
+from extractor.diacritics import Diacritics
+from extractor.dictionaryfile import DictionaryFile
+from extractor.exclusionsfile import ExclusionsFile
+from extractor.forms import Form, Tense
+from extractor.notes import Notes
+from extractor.reflexius import Reflexius
 
 DIACRITIC_POSTAG = "D"
 WORDS_SEPARATOR = " / "

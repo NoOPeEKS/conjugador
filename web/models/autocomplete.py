@@ -20,14 +20,14 @@
 
 import json
 
-from firstletter import FirstLetter
-from searchbase import SearchBase
+from web.firstletter import FirstLetter
+from web.models.searchbase import SearchBase
 from whoosh.index import open_dir
 from whoosh.qparser import MultifieldParser
 
 
 def open_indexes():
-    dir_name = "../data/autocomplete_index/"
+    dir_name = "data/autocomplete_index/"
 
     idxs = {}
     for letter in FirstLetter().get_letters():

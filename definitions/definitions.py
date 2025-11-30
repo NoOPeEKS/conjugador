@@ -22,7 +22,7 @@ import logging
 import xml.etree.ElementTree
 import json
 import os
-from textextract import TextExtract
+from definitions.textextract import TextExtract
 
 class Definitions():
 

@@ -20,7 +20,7 @@
 
 import datetime
 
-from indexcreator import IndexCreator
+from indexer.indexcreator import IndexCreator
 
 
 def main():

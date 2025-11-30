@@ -18,11 +18,6 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-import sys
-
-from flask import Flask, Response, request
-
-sys.path.append("models/")
 import datetime
 import json
 import logging
@@ -33,10 +28,12 @@ from functools import lru_cache
 from pathlib import Path
 
 import psutil
-from autocomplete import Autocomplete
-from indexletter import IndexLetter
-from search import Search
-from usage import Usage
+from flask import Flask, Response, request
+
+from web.models.indexletter import IndexLetter
+from web.models.autocomplete import Autocomplete
+from web.models.search import Search
+from web.usage import Usage
 
 app = Flask(__name__)
 start_time = datetime.datetime.now()

@@ -21,11 +21,11 @@
 import json
 from pathlib import Path
 
-from searchbase import SearchBase
+from web.models.searchbase import SearchBase
 from whoosh.index import open_dir
 from whoosh.qparser import MultifieldParser
 
-dir_name = "../data/search_index/"
+dir_name = "data/search_index/"
 ix = open_dir(dir_name)  # static instance reusable across requests
 
 
@@ -80,7 +80,7 @@ class Search(SearchBase):
         results = self.get_results()
         all_results = []
         for result in results:
-            filepath = "../" + result["file_path"]
+            filepath = result["file_path"]
 
             with Path(filepath).open("r") as j:
                 file = json.loads(j.read())

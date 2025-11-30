@@ -21,7 +21,7 @@
 import datetime
 import logging
 import os
-from definitions import Definitions
+from definitions.definitions import Definitions
 
 def init_logging():
     logfile = 'extract-to-json.log'
