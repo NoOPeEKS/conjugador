@@ -32,7 +32,7 @@ class Definitions:
     Generates a dictionary of the definitions of all the verbs in catalan and saves it
     by default at `data/definitions.txt`.
     """
-    def _get_revision_text(self, revision: Element[str]) -> str:
+    def _get_revision_text(self, revision: Element) -> str:
         for child in revision:
             if "text" in child.tag:
                 return child.text if child.text else ""
