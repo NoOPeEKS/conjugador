@@ -23,14 +23,13 @@ import datetime
 from indexer.indexcreator import IndexCreator
 
 
-def main():
+def main() -> None:  # noqa: D103
     print("Create Whoosh index from a directory with JSONs")
 
     start_time = datetime.datetime.now()
 
-    indexCreator = IndexCreator("data/jsons/")
-    indexCreator.create()
-    indexCreator.process_files()
+    index_creator = IndexCreator("data/jsons/")
+    index_creator.process_files()
     print(
         "Time used to create the index: {0} ".format(
             datetime.datetime.now() - start_time
