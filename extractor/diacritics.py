@@ -23,8 +23,8 @@ from pathlib import Path
 
 class Diacritics:
     """
-    Contains all the IEC diacrític accents and allows checking if a word
-    requires a diacrític accent.
+    Contains all the deprecated IEC diacritic accents to identify
+    obsolete diacritics and how the word is written nowadays.
     """
 
     def __init__(self) -> None:
@@ -63,13 +63,14 @@ class Diacritics:
 
     def has_word_diacritic(self, word: str) -> bool:
         """
-        Returns whether a given word or set of words has a diacrític accent.
+        Returns whether a given word or set of words is in the list of
+        deprecated diacrític accents.
 
         Args:
             word (str): The specific word, or set of words separated by "/".
 
         Returns:
-            bool: Whether the word/s have a diacrític accent.
+            bool: Whether the word/s have a deprecated diacrític accent.
         """
         TWO_WORDS_SEPARATOR = "/"
 

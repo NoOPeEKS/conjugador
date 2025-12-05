@@ -196,7 +196,15 @@ class TextExtract:
 
     def get_description(self, infinitives: list | None = None) -> str:  # noqa: C901
         """
-        TODO: Docstring this function.
+        Looks into a page element of the wiktionary and if it is a verb,
+        extracts the definition without unnecessary formatting, and alternative
+        forms which we use to show the user.
+
+        Args:
+            infinitives (list | None): List of alternative infintives.
+
+        Returns:
+            str: The description in string format.
         """
         if infinitives is None:
             infinitives = []
