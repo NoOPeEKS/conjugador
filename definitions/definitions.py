@@ -40,7 +40,7 @@ class Definitions:
         return ""
 
     def _get_infinitives(self, filename: str) -> list[str]:
-        words = [line.lower().strip() for line in Path(filename).read_text()]
+        words = [line.lower().strip() for line in Path(filename).read_text().splitlines()]
         return words
 
     def generate(
