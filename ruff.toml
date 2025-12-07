@@ -30,6 +30,7 @@ exclude = [
     "*/tests/*",
     "*/tools/*",
     "extractor/extract.py",
+    "catalan-dict-tools",
 ]
 
 # Same as Black.
