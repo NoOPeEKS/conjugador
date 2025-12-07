@@ -35,6 +35,7 @@ class Form:
         word: str,
         variant: str,
         prefix: str | None = None,
+        *,
         diacritic: bool = False,
     ) -> None:
         """
