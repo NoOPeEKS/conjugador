@@ -29,6 +29,7 @@ exclude = [
     "*/test/*",
     "*/tests/*",
     "*/tools/*",
+    "extractor/extract.py",
 ]
 
 # Same as Black.
