@@ -26,8 +26,12 @@ from typing import Match
 
 class TextExtract:
     """
-    Parses and removes information from a text, giving the ability to retrieve the
-    verb descriptions.
+    Extracts and cleans the Verb section of a Wiktionary entry.
+
+    It locates the '=== Verb ===' block, removes MediaWiki markup
+    (templates, links, HTML, galleries), converts list syntax (#, #:) to HTML,
+    and detects alternative verb forms.
+    Returns a cleaned, display-ready HTML description.
     """
 
     def __init__(self, text: str) -> None:

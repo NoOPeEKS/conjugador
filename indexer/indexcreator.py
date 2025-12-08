@@ -51,7 +51,6 @@ class IndexCreator:
         self.indexletter = IndexLetter()
 
         self.search.create()
-        self.autocomplete.create()
         self.indexletter.create()
 
     def _write_entry(

@@ -43,12 +43,6 @@ class Autocomplete(Index):
         self.ixs = set()
         self.duplicates = set()
 
-    def create(self) -> None:
-        """
-        TODO: What does this function even do? It's used somewhere but for what purpose?
-        """
-        return
-
     def _create(self, letter: str) -> MpWriter | SegmentWriter:
         schema = Schema(
             verb_form=TEXT(stored=True, analyzer=self.analyzer),

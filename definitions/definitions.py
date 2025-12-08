@@ -65,7 +65,7 @@ class Definitions:
 
     def get_without_reflexive_pronoun(self, infinitive: str) -> str:
         """
-        Returns the infinitive without the refrexible pronouns.
+        Returns the infinitive without the reflexive pronouns.
         This is because Wiktionary has the definitions with reflexible pronoums
         which we need to remove to match our list of infinitive verbs.
 

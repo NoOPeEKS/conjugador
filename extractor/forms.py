@@ -42,8 +42,6 @@ class Form:
         Initializes a Form with a word, variant, prefix and whether it incorporates
         a diacritic accent or not.
 
-        TODO: Refactor diacritic argument to be kw_only.
-
         Args:
             word (str): The word to conjugate.
             variant (str): The variant to apply to the word.
