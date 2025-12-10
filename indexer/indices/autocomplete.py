@@ -174,3 +174,15 @@ class AutocompleteIndex(BaseIndex):
 
         helpers.bulk(self.es_client, self.bulk_ops)
         self.bulk_ops = []
+
+    def doc_count(self) -> int:
+        """
+        Gets the total count of the documents in the Autocomplete index.
+
+        Returns:
+            int: The total counts of documents in the index.
+        """
+        total = 0
+        for index_name in self.created_indices:
+            total += self.es_client.count(index=index_name)["count"]
+        return total
