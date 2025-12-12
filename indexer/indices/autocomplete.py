@@ -56,7 +56,6 @@ class AutocompleteIndex(BaseIndex):
             - infinitive
             - url
             - autocomplete_sorting
-            - letter
         Also attaches a custom tokenizer based on a regex pattern and a custom analyzer for
         checking every term in lowercase.
 
