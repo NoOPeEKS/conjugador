@@ -85,7 +85,7 @@ class LetterIndex(BaseIndex):
         """
         if not self.es_client.indices.exists(index=self.index_name):
             self.es_client.indices.create(
-                index=self.index_name, mappings=self._build_mapping()
+                index=self.index_name, body=self._build_mapping()
             )
 
     def write_entry(

@@ -21,7 +21,7 @@ class BaseIndex:
         if self.es_client.indices.exists(index=index_name):
             self.es_client.indices.delete(index=index_name)
 
-        self.es_client.indices.create(index=index_name, mappings=mappings)
+        self.es_client.indices.create(index=index_name, body=mappings)
 
     def _verbs_to_ignore_in_autocomplete(self, mode: str, tense: str) -> bool:
         if mode == "Indicatiu" and any(
