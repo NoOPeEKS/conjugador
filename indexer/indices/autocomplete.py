@@ -86,15 +86,13 @@ class AutocompleteIndex(BaseIndex):
                     "verb_form": {
                         "type": "text",
                         "analyzer": "custom_catalan_analyzer",
-                        "fields": {"raw": {"type": "keyword"}},
                     },
-                    "infinitive": {"type": "keyword"},
-                    "url": {
-                        "type": "keyword",
-                        "index": False,
+                    "infinitive": {"type": "keyword", "index": False},
+                    "url": {"type": "keyword", "index": False},
+                    "autocomplete_sorting": {
+                        "type": "text",
+                        "fields": {"keyword": {"type": "keyword"}},
                     },
-                    "autocomplete_sorting": {"type": "keyword"},
-                    "letter": {"type": "keyword"},
                 }
             },
         }
@@ -147,7 +145,6 @@ class AutocompleteIndex(BaseIndex):
                     "infinitive": title,
                     "url": infinitive,
                     "autocomplete_sorting": sorting_key,
-                    "letter": letter,
                 },
             }
         )
