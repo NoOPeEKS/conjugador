@@ -3,20 +3,35 @@ from elasticsearch import Elasticsearch
 
 class BaseIndex:
     """
-    TODO: Docstring this class.
+    Base Index class that provides basic shared functionality between indices.
+
+    Args:
+        es_url (str): The connection url of the Elasticsearch instance.
     """
 
     def __init__(self, es_url: str = "http://localhost:9200") -> None:
         """
-        TODO: Docstring this.
-        TODO: Do self.es_client.info() to check if the url was valid.
+        Initializes a BaseIndex instance with an Elasticsearch client and
+        a catalan tokenizer pattern.
+
+        Args:
+            es_url (str): The connection url of the Elasticsearch instance.
         """
         self.es_client = Elasticsearch(es_url)
+
+        if not self.es_client.ping():
+            raise AttributeError("Invalid Elasticsearch URL provided.")
+
         self.tokenizer_pattern = r"(\w|·)+(\.?(\w|·)+)*"
 
     def create_index(self, index_name: str, mappings: dict) -> None:
         """
-        TODO: Docstring this.
+        Creates an index with the specified name and body mappings.
+        If it's already created, deletes it and recreates it.
+
+        Args:
+            index_name (str): The name of the index to create.
+            mappings (dict): A dictionary containing the body mappings of the index.
         """
         if self.es_client.indices.exists(index=index_name):
             self.es_client.indices.delete(index=index_name)
