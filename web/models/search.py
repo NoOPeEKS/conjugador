@@ -25,13 +25,13 @@ from whoosh.index import open_dir
 from whoosh.qparser import MultifieldParser
 from whoosh.searching import Results, Searcher
 
-from web.models.searchbase import SearchBase
+from web.models.base import BaseSearch
 
 dir_name = "data/search_index/"
 ix = open_dir(dir_name)  # static instance reusable across requests
 
 
-class Search(SearchBase):
+class Search(BaseSearch):
     """
     Search a term in the Whoosh index.
 
