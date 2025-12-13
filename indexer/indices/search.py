@@ -58,7 +58,7 @@ class SearchIndex(BaseIndex):
                             "type": "custom",
                             "tokenizer": "custom_catalan_tokenizer",
                             "filter": ["lowercase", "asciifolding"],
-                        }
+                        },
                     },
                 }
             },
