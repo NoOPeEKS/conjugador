@@ -1,7 +1,6 @@
-.PHONY: docker-build docker-run generate-data update-data test
+.PHONY: docker-build docker-run generate-data update-data test generate-data-without-indexation
 
 docker-build:
-	docker compose pull
 	docker compose build
 
 docker-run:
@@ -13,6 +12,12 @@ generate-data:
 	uv run -m definitions.extract-to-json
 	uv run -m extractor.extract
 	uv run -m indexer.index_creation
+
+generate-data-without-indexation:
+	bzip2 -cdk definitions/cawiktionary-latest-pages-meta-current.xml.bz2 > definitions/cawiktionary-latest-pages-meta-current.xml
+	uv run -m extractor.extract -i
+	uv run -m definitions.extract-to-json
+	uv run -m extractor.extract
 
 update-data:
 	# Extract current version
