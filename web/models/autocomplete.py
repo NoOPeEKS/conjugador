@@ -26,10 +26,11 @@ from web.models.base import BaseSearch
 
 class Autocomplete(BaseSearch):
     """
-    Autocomplete a word based on the information on the Whoosh indices.
+    Autocomplete a word based on the information on the Elasticsearch indices.
 
     Args:
         word (str): The word to try to autocomplete from.
+        es_url (str): The url to connect to an Elasticsearch instance.
     """
 
     def __init__(
@@ -40,6 +41,7 @@ class Autocomplete(BaseSearch):
 
         Args:
             word (str): The word to try to autocomplete from.
+            es_url (str): The url to connect to an Elasticsearch instance.
         """
         super().__init__(word, es_url)
         self.query = None
