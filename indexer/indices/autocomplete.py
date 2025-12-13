@@ -85,6 +85,9 @@ class AutocompleteIndex(BaseIndex):
                     "verb_form": {
                         "type": "text",
                         "analyzer": "custom_catalan_analyzer",
+                        "fields": {
+                            "keyword": {"type": "keyword"},
+                        },
                     },
                     "infinitive": {"type": "keyword", "index": False},
                     "url": {"type": "keyword", "index": False},

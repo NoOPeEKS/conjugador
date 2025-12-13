@@ -74,7 +74,7 @@ class Autocomplete(BaseSearch):
             return self.results
 
         query = {
-            "query": {"prefix": {"verb_form": {"value": self.word.lower()}}},
+            "query": {"prefix": {"verb_form.keyword": {"value": self.word.lower()}}},
             "sort": [
                 {
                     "autocomplete_sorting.keyword": {
