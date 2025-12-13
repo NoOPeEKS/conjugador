@@ -96,7 +96,8 @@ def json_answer_status(data: str, status: int) -> Response:
 
 @lru_cache(maxsize=500)  # Rationale: there are ~10K infitives, cache top 5%
 def _get_search(word: str) -> tuple[str, int, int]:
-    search = Search(word)
+    es_url = os.getenv("ES_URL", "http://conjugador-elastic:9200")
+    search = Search(word, es_url)
     j, status = search.get_json_search()
     num_results = search.get_num_results()
     return j, status, num_results
@@ -121,7 +122,8 @@ def search_api(word: str) -> Response:
 
 @lru_cache(maxsize=23)  # Rationale: there 23 index files only
 def _get_letter_index(letter: str) -> tuple[str, int, int]:
-    indexLetter = IndexLetter(letter)
+    es_url = os.getenv("ES_URL", "http://conjugador-elastic:9200")
+    indexLetter = IndexLetter(letter, es_url)
     j, status = indexLetter.get_json()
     num_results = indexLetter.get_num_results()
     return j, status, num_results
@@ -151,7 +153,8 @@ def autocomplete_api(word: str) -> Response:
     """
     start_time = time.time()
 
-    autocomplete = Autocomplete(word)
+    es_url = os.getenv("ES_URL", "http://conjugador-elastic:9200")
+    autocomplete = Autocomplete(word, es_url)
     j, status = autocomplete.get_json()
     num_results = autocomplete.get_num_results()
 
