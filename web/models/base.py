@@ -26,9 +26,9 @@ class BaseSearch:
     Base class that provides functionality to store a word for later search.
     """
 
-    def __init__(
-        self, word: str, es_url: str = "http://localhost:9200"
-    ) -> None:
+    DEFAULT_ES_HOST = "http://localhost:9200"
+
+    def __init__(self, word: str, es_url: str = DEFAULT_ES_HOST) -> None:
         """
         Initializes the SearchBase class with a word.
 

@@ -30,19 +30,22 @@ class IndexLetter:
 
     Args:
         letter (str): The letter to search for.
-        es_url (str): The url to connect to an Elasticsearch instance.
+        es_url (str | None): The url to connect to an Elasticsearch instance.
     """
 
-    def __init__(
-        self, letter: str, es_url: str = "http://localhost:9200"
-    ) -> None:
+    DEFAULT_ES_HOST = "http://localhost:9200"
+
+    def __init__(self, letter: str, es_url: str | None = None) -> None:
         """
         Initializes the IndexLetter class with a letter to look for.
 
         Args:
             letter (str): The letter to search for.
-            es_url (str): The url to connect to an Elasticsearch instance.
+            es_url (str | None): The url to connect to an Elasticsearch instance.
         """
+        if not es_url:
+            es_url = self.DEFAULT_ES_HOST
+
         self.letter = letter
         self.es_client = Elasticsearch(es_url)
         self.index_name = "letter-index"

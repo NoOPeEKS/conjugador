@@ -33,16 +33,17 @@ class Autocomplete(BaseSearch):
         es_url (str): The url to connect to an Elasticsearch instance.
     """
 
-    def __init__(
-        self, word: str, es_url: str = "http://localhost:9200"
-    ) -> None:
+    def __init__(self, word: str, es_url: str | None = None) -> None:
         """
         Initializes the Autocomplete class with a word to autocomplete.
 
         Args:
             word (str): The word to try to autocomplete from.
-            es_url (str): The url to connect to an Elasticsearch instance.
+            es_url (str | None): The url to connect to an Elasticsearch instance.
         """
+        if not es_url:
+            es_url = self.DEFAULT_ES_HOST
+
         super().__init__(word, es_url)
         self.query = None
         self.num_results = 0
