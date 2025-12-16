@@ -37,6 +37,7 @@ from web.usage import Usage
 
 app = Flask(__name__)
 start_time = datetime.datetime.now()
+es_url = os.getenv("ES_URL", "http://conjugador-elastic:9200")
 
 
 def init_logging() -> None:
@@ -96,7 +97,6 @@ def json_answer_status(data: str, status: int) -> Response:
 
 @lru_cache(maxsize=500)  # Rationale: there are ~10K infitives, cache top 5%
 def _get_search(word: str) -> tuple[str, int, int]:
-    es_url = os.getenv("ES_URL", "http://conjugador-elastic:9200")
     search = Search(word, es_url)
     j, status = search.get_json_search()
     num_results = search.get_num_results()
@@ -122,7 +122,6 @@ def search_api(word: str) -> Response:
 
 @lru_cache(maxsize=23)  # Rationale: there 23 index files only
 def _get_letter_index(letter: str) -> tuple[str, int, int]:
-    es_url = os.getenv("ES_URL", "http://conjugador-elastic:9200")
     indexLetter = IndexLetter(letter, es_url)
     j, status = indexLetter.get_json()
     num_results = indexLetter.get_num_results()
@@ -146,7 +145,6 @@ def index_letter_api(letter: str) -> Response:
 
 @lru_cache(maxsize=500)
 def _get_autocomplete(word: str) -> tuple[str, int, int]:
-    es_url = os.getenv("ES_URL", "http://conjugador-elastic:9200")
     autocomplete = Autocomplete(word, es_url)
     j, status = autocomplete.get_json()
     num_results = autocomplete.get_num_results()
