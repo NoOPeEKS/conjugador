@@ -32,9 +32,21 @@ build:
     - docker info
   stage: build
   script:
-    - docker build -f docker/dockerfile --cache-from $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME .
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+#    - docker build -f docker/dockerfile --cache-from $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME .
+#    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+#    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+    - export REPO_NAME=$CI_REGISTRY_IMAGE/conjugador-elastic
+    - export IMAGE_NAME=$REPO_NAME:$CI_COMMIT_REF_NAME
+    - export DOCKER_PATH=docker/elasticsearch/Dockerfile
+    - docker build -f $DOCKER_PATH --tag $IMAGE_NAME .
+    - docker push $IMAGE_NAME
+
+    - export REPO_NAME=$CI_REGISTRY_IMAGE/conjugador-webserver
+    - export IMAGE_NAME=$REPO_NAME:$CI_COMMIT_REF_NAME
+    - export DOCKER_PATH=docker/webserver/Dockerfile
+    - docker build -f $DOCKER_PATH --tag $IMAGE_NAME .
+    - docker push $IMAGE_NAME
+    
 
 #deploy:
 #  stage: deploy
