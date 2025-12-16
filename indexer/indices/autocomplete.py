@@ -11,17 +11,20 @@ class AutocompleteIndex(BaseIndex):
     allowing full-text search.
 
     Args:
-        es_url (str): Elasticsearch instance url. Defaults to 'http://localhost:9200'.
+        es_url (str | None): Elasticsearch instance url. Defaults to 'http://localhost:9200'.
     """
 
-    def __init__(self, es_url: str = "http://localhost:9200") -> None:
+    def __init__(self, es_url: str | None = None) -> None:
         """
         Initializes an AutocompleteIndex instance for the autocompletion feature
         based off Elasticsearch.
 
         Args:
-            es_url (str): Elasticsearch instance url. Defaults to 'http://localhost:9200'.
+            es_url (str | None): Elasticsearch instance url. Defaults to 'http://localhost:9200'.
         """
+        if not es_url:
+            es_url = self.DEFAULT_ES_HOST
+
         super().__init__(es_url)
         self.index_prefix = "autocomplete-"
         self.letter = FirstLetter()

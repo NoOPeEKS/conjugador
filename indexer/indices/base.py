@@ -6,17 +6,22 @@ class BaseIndex:
     Base Index class that provides basic shared functionality between indices.
 
     Args:
-        es_url (str): The connection url of the Elasticsearch instance.
+        es_url (str | None): The connection url of the Elasticsearch instance.
     """
 
-    def __init__(self, es_url: str = "http://localhost:9200") -> None:
+    DEFAULT_ES_HOST = "http://localhost:9200"
+
+    def __init__(self, es_url: str | None = None) -> None:
         """
         Initializes a BaseIndex instance with an Elasticsearch client and
         a catalan tokenizer pattern.
 
         Args:
-            es_url (str): The connection url of the Elasticsearch instance.
+            es_url (str | None): The connection url of the Elasticsearch instance.
         """
+        if not es_url:
+            es_url = self.DEFAULT_ES_HOST
+
         self.es_client = Elasticsearch(es_url)
 
         if not self.es_client.ping():
