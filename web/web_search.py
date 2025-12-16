@@ -144,6 +144,13 @@ def index_letter_api(letter: str) -> Response:
     )
     return json_answer_status(j, status)
 
+@lru_cache(maxsize=500)
+def _get_autocomplete(word: str) -> tuple[str, int, int]:
+    es_url = os.getenv("ES_URL", "http://conjugador-elastic:9200")
+    autocomplete = Autocomplete(word, es_url)
+    j, status = autocomplete.get_json()
+    num_results = autocomplete.get_num_results()
+    return j, status, num_results
 
 @app.route("/autocomplete/<word>", methods=["GET"])
 def autocomplete_api(word: str) -> Response:
@@ -153,11 +160,7 @@ def autocomplete_api(word: str) -> Response:
     """
     start_time = time.time()
 
-    es_url = os.getenv("ES_URL", "http://conjugador-elastic:9200")
-    autocomplete = Autocomplete(word, es_url)
-    j, status = autocomplete.get_json()
-    num_results = autocomplete.get_num_results()
-
+    j, status, num_results = _get_autocomplete(word)
     elapsed_time = time.time() - start_time
     logging.debug(
         f"/autocomplete for '{word}': {num_results} results, time: {elapsed_time:.2f}s"
@@ -201,6 +204,7 @@ def stats() -> Response:
     caches = {}
     caches["search"] = _get_cache_info(_get_search.cache_info())
     caches["letter_index"] = _get_cache_info(_get_letter_index.cache_info())
+    caches["autocomplete"] = _get_cache_info(_get_autocomplete.cache_info())
     result["cache"] = caches
 
     result["process_id"] = os.getpid()
