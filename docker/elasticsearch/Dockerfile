@@ -39,7 +39,7 @@ RUN set -e && \
     done && \
     make generate-data && \
     echo "Flushing data to disk..." && \
-    curl -X POST "http://localhost:9200/_flush/synced" 2>/dev/null || true && \
+    curl -X POST "http://localhost:9200/_flush" 2>/dev/null || true && \
     sleep 2 && \
     echo "Shutting down Elasticsearch..." && \
     if [ -f /tmp/es.pid ]; then \
