@@ -19,6 +19,7 @@
 # Boston, MA 02111-1307, USA.
 
 import json
+import logging
 
 from web.firstletter import FirstLetter
 from web.models.base import BaseSearch
@@ -94,7 +95,7 @@ class Autocomplete(BaseSearch):
             self.results = [hit["_source"] for hit in resp["hits"]["hits"]]
             self.num_results = len(self.results)
         except Exception as e:
-            print(f"Error searching index '{index_name}': {e}")
+            logging.error(f"Error searching index '{index_name}': {e}")
             self.results = []
             self.num_results = 0
 

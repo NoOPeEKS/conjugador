@@ -19,6 +19,7 @@
 # Boston, MA 02111-1307, USA.
 
 import json
+import logging
 
 from elasticsearch import Elasticsearch
 from pyuca import Collator
@@ -91,7 +92,7 @@ class IndexLetter:
             self.num_results = len(self.results)
 
         except Exception as e:
-            print(f"Error searching index {self.index_name}: {e}")
+            logging.error(f"Error searching index {self.index_name}: {e}")
             self.results = []
             self.num_results = 0
 

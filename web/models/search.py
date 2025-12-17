@@ -19,6 +19,7 @@
 # Boston, MA02111-1307, USA.
 
 import json
+import logging
 from pathlib import Path
 
 from web.models.base import BaseSearch
@@ -107,7 +108,7 @@ class Search(BaseSearch):
             self.results = [hit["_source"] for hit in hits]
             self.num_results = len(self.results)
         except Exception as e:
-            print(f"Error searching index '{self.index_name}': {e}")
+            logging.error(f"Error searching index '{self.index_name}': {e}")
             self.results = []
             self.num_results = 0
 
@@ -134,7 +135,7 @@ class Search(BaseSearch):
                     file = json.loads(j.read())
                     all_results.append(file)
             except Exception as e:
-                print(f"Error reading file {filepath}: {e}")
+                logging.error(f"Error reading file {filepath}: {e}")
                 continue
 
         return json.dumps(
