@@ -7,17 +7,19 @@ docker-run:
 	docker compose up
 
 generate-data:
-	bzip2 -cdk definitions/cawiktionary-latest-pages-meta-current.xml.bz2 > definitions/cawiktionary-latest-pages-meta-current.xml
-	uv run -m extractor.extract -i
-	uv run -m definitions.extract-to-json
-	uv run -m extractor.extract
+	set -e; \
+	bzip2 -cdk definitions/cawiktionary-latest-pages-meta-current.xml.bz2 > definitions/cawiktionary-latest-pages-meta-current.xml; \
+	uv run -m extractor.extract -i; \
+	uv run -m definitions.extract-to-json; \
+	uv run -m extractor.extract; \
 	uv run -m indexer.index_creation
 
 generate-data-without-indexation:
-	bzip2 -cdk definitions/cawiktionary-latest-pages-meta-current.xml.bz2 > definitions/cawiktionary-latest-pages-meta-current.xml
-	uv run -m extractor.extract -i
-	uv run -m definitions.extract-to-json
-	uv run -m extractor.extract
+	set -e; \
+	bzip2 -cdk definitions/cawiktionary-latest-pages-meta-current.xml.bz2 > definitions/cawiktionary-latest-pages-meta-current.xml; \
+	uv run -m extractor.extract -i; \
+	uv run -m definitions.extract-to-json; \
+	uv run -m extractor.extract; \
 
 update-data:
 	# Extract current version

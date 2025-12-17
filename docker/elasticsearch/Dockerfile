@@ -37,7 +37,8 @@ RUN set -e && \
         echo "Waiting... ($i/180)"; \
         sleep 2; \
     done && \
-    make generate-data && \
+    make generate-data; \
+    MAKE_EXIT_CODE=$?; \
     echo "Flushing data to disk..." && \
     curl -X POST "http://localhost:9200/_flush" 2>/dev/null || true && \
     sleep 2 && \
@@ -61,6 +62,10 @@ RUN set -e && \
     echo "Removing lock files..." && \
     find /usr/share/elasticsearch/data -name "*.lock" -type f -delete && \
     find /usr/share/elasticsearch/data -name "write.lock" -type f -delete && \
+    if [ $MAKE_EXIT_CODE -ne 0 ]; then \
+        echo "ERROR: make generate-data failed with exit code $MAKE_EXIT_CODE"; \
+        exit $MAKE_EXIT_CODE; \
+    fi && \
     echo "Indexing complete!"
 
 FROM elasticsearch:8.15.1
