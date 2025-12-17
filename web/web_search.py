@@ -38,6 +38,8 @@ from web.usage import Usage
 app = Flask(__name__)
 start_time = datetime.datetime.now()
 es_url = os.getenv("ES_URL", "http://conjugador-elastic:9200")
+es_logger = logging.getLogger("elastic_transport.transport")
+es_logger.setLevel(os.getenv("LOGLEVEL", "WARNING"))
 
 
 def init_logging() -> None:
@@ -143,12 +145,14 @@ def index_letter_api(letter: str) -> Response:
     )
     return json_answer_status(j, status)
 
+
 @lru_cache(maxsize=500)
 def _get_autocomplete(word: str) -> tuple[str, int, int]:
     autocomplete = Autocomplete(word, es_url)
     j, status = autocomplete.get_json()
     num_results = autocomplete.get_num_results()
     return j, status, num_results
+
 
 @app.route("/autocomplete/<word>", methods=["GET"])
 def autocomplete_api(word: str) -> Response:
