@@ -14,7 +14,7 @@ COPY catalan-dict-tools /srv/catalan-dict-tools
 COPY definitions /srv/definitions
 COPY indexer /srv/indexer
 COPY extractor /srv/extractor
-COPY web /srv/web
 RUN make generate-data-without-indexation
+COPY web /srv/web
 
 ENTRYPOINT /srv/entrypoint.sh
