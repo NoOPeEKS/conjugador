@@ -1,4 +1,4 @@
-DEFAULT_ES_HOSTfrom elasticsearch import helpers
+from elasticsearch import helpers
 
 from indexer.firstletter import FirstLetter
 from indexer.indices.base import BaseIndex
