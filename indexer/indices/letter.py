@@ -1,4 +1,4 @@
-from elasticsearch import helpers
+DEFAULT_ES_HOSTfrom elasticsearch import helpers
 
 from indexer.firstletter import FirstLetter
 from indexer.indices.base import BaseIndex
@@ -10,7 +10,7 @@ class LetterIndex(BaseIndex):
     Creates a Letter index allowing to check verbs based off their first letter.
 
     Args:
-        es_url (str | None): Elasticsearch instance url. Defaults to 'http://localhost:9200'.
+        es_url (str | None): Elasticsearch instance url. Defaults to 'DEFAULT_ES_HOST'.
     """
 
     def __init__(self, es_url: str | None = None) -> None:
@@ -19,7 +19,7 @@ class LetterIndex(BaseIndex):
         based off Elasticsearch.
 
         Args:
-            es_url (str | None): Elasticsearch instance url. Defaults to 'http://localhost:9200'.
+            es_url (str | None): Elasticsearch instance url. Defaults to 'DEFAULT_ES_HOST'.
         """
         if not es_url:
             es_url = self.DEFAULT_ES_HOST

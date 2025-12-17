@@ -10,7 +10,7 @@ class SearchIndex(BaseIndex):
     Creates a Search index allowing to check verbs based off a given search text.
 
     Args:
-        es_url (str | None): Elasticsearch instance url. Defaults to 'http://localhost:9200'.
+        es_url (str | None): Elasticsearch instance url. Defaults to 'DEFAULT_ES_HOST'.
     """
 
     def __init__(self, es_url: str | None = None) -> None:
@@ -18,7 +18,7 @@ class SearchIndex(BaseIndex):
         Initializes a SearchIndex instance for the letter feature based off Elasticsearch.
 
         Args:
-            es_url (str | None): Elasticsearch instance url. Defaults to 'http://localhost:9200'.
+            es_url (str | None): Elasticsearch instance url. Defaults to 'DEFAULT_ES_HOST'.
         """
         if not es_url:
             es_url = self.DEFAULT_ES_HOST
